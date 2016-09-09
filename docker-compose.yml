@@ -1,19 +1,11 @@
 version: '2'
 services:
-  data:
-    image: busybox
-    volumes:
-      - /var/lib/mysql
-  bundle:
-    image: busybox
-    volumes:
-      - /bundle
   mysql:
     image: mysql:5.7
     ports:
       - "3306:3306"
-    volumes_from:
-      - data
+    volumes:
+      - data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
   redis:
@@ -23,8 +15,7 @@ services:
     command: ./script/start
     volumes:
       - .:/app
-    volumes_from:
-      - bundle
+      - bundle:/bundle
     ports:
       - "3000:3000"
     environment:
@@ -34,3 +25,8 @@ services:
     links:
       - mysql
       - redis
+volumes:
+  data:
+    driver: local
+  bundle:
+    driver: local
