@@ -4,10 +4,10 @@ services:
     image: busybox
     volumes:
       - /var/lib/mysql
-  gem:
+  bundle:
     image: busybox
     volumes:
-      - /gem
+      - /bundle
   mysql:
     image: mysql:5.7
     ports:
@@ -24,7 +24,7 @@ services:
     volumes:
       - .:/app
     volumes_from:
-      - gem
+      - bundle
     ports:
       - "3000:3000"
     environment:
