@@ -1,0 +1,30 @@
+version: '2'
+services:
+  data:
+    image: busybox
+    volumes:
+      - /var/lib/mysql
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes_from:
+      - data
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+  redis:
+    image: redis:3.2.0-alpine
+  web:
+    build: .
+    command: bundle exec puma
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    environment:
+      DB_PASSWORD: password
+      DB_HOST: mysql
+      REDIS_HOST: redis
+    links:
+      - mysql
+      - redis
