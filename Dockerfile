@@ -16,9 +16,4 @@ WORKDIR /app
 COPY . /app
 EXPOSE 3000
 
-ENV BUNDLE_PATH /box
-
-#RUN gem install nokogiri -v 1.6.8 && \
-#    gem install rails --pre && \
-#    bundle install && \
-#    bundle clean
+ENV BUNDLE_PATH /bundle
